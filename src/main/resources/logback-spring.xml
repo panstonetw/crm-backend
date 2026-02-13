@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" debug="false">
+
+    <!-- 日誌存放路徑 -->
+    <property name="currentLoggerFilePath" value="${LOG_PATH:-./logs}" />
+    <!-- 日誌檔案名稱 -->
+    <property name="currentLoggerFileName" value="crm" />
+    <!-- 日誌格式, 參考：https://logback.qos.ch/manual/layouts.html -->
+    <property name="currentLoggerPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%logger{15}:%line] - %msg%n" />
+
+    <!-- appender： 控制台日誌 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8" >
+            <pattern>${currentLoggerPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- appender：主日誌檔 -->
+    <appender name="ALL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日誌檔路徑及檔案名 -->
+        <file>${currentLoggerFilePath}/all/${currentLoggerFileName}.log</file>
+        <!-- 內容編碼及格式 -->
+        <encoder charset="UTF-8" ><pattern>${currentLoggerPattern}</pattern></encoder>
+        <!-- 日誌記錄器的滾動策略，按日期，按大小記錄 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天日誌歸檔路徑以及格式 -->
+            <fileNamePattern>${currentLoggerFilePath}/all/${currentLoggerFileName}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory> <!--日誌檔保留天數-->
+        </rollingPolicy>
+    </appender>
+
+    <!-- appender：錯誤資訊日誌檔 -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日誌檔路徑及檔案名 -->
+        <file>${currentLoggerFilePath}/error/${currentLoggerFileName}-error.log</file>
+        <!-- 內容編碼及格式 -->
+        <encoder charset="UTF-8" ><pattern>${currentLoggerPattern}</pattern></encoder>
+        <!-- 日誌記錄器的滾動策略，按日期，按大小記錄 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天日誌歸檔路徑以及格式 -->
+            <fileNamePattern>${currentLoggerFilePath}/error/${currentLoggerFileName}-error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory> <!--日誌檔保留天數-->
+        </rollingPolicy>
+        <!-- 此日誌檔只記錄ERROR級別的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ALL_FILE" />
+        <appender-ref ref="ERROR_FILE" />
+    </root>
+
+</configuration>
