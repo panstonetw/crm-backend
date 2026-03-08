@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: demo
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/crm
+    username: admin
+    password: admin123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  messages:
+    basename: i18n/messages
+    cache-duration: 3600
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: mappings

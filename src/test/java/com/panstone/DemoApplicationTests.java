@@ -1,4 +1,4 @@
-package com.example.crm_backend;
+package com.panstone;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

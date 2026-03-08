@@ -1,4 +1,4 @@
-package com.example.crm_backend;
+package com.panstone.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

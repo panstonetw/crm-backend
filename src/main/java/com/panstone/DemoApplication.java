@@ -1,4 +1,4 @@
-package com.example.crm_backend;
+package com.panstone;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
